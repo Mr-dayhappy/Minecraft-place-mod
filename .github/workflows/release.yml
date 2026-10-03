@@ -45,7 +45,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -Pmod_version=${{ steps.ver.outputs.version }} --stacktrace
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.ver.outputs.tag }}
@@ -54,3 +54,27 @@ jobs:
           files: build/libs/*.jar
           draft: false
           prerelease: false
+
+      - name: Read Modrinth metadata
+        id: meta
+        run: |
+          echo "project_id=$(jq -r .project_id modrinth.json)" >> "$GITHUB_OUTPUT"
+          echo "loaders=$(jq -r '.loaders | join(\",\")' modrinth.json)" >> "$GITHUB_OUTPUT"
+          echo "game_versions=$(jq -r '.game_versions | join(\",\")' modrinth.json)" >> "$GITHUB_OUTPUT"
+          echo "version_type=$(jq -r .version_type modrinth.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to Modrinth
+        # 仅在正式 tag 时发布（跳过含 test 的 tag）
+        if: ${{ !contains(steps.ver.outputs.tag, 'test') }}
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ steps.meta.outputs.project_id }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: build/libs/minecraft-place-mod-${{ steps.ver.outputs.version }}.jar
+          name: ${{ steps.ver.outputs.tag }}
+          version: ${{ steps.ver.outputs.version }}
+          version-type: ${{ steps.meta.outputs.version_type }}
+          loaders: ${{ steps.meta.outputs.loaders }}
+          game-versions: ${{ steps.meta.outputs.game_versions }}
+          changelog: 详见 GitHub Release。
+          modrinth-featured: false

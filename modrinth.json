@@ -1,0 +1,10 @@
+{
+	"project_id": "better-place-command",
+	"version_type": "release",
+	"loaders": [
+		"fabric"
+	],
+	"game_versions": [
+		"26.1.2"
+	]
+}
