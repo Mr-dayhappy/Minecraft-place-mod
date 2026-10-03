@@ -5,11 +5,11 @@
 	"name": "Minecraft Place Mod",
 	"description": "A mod which promotes the /place command — makes /place structure-generated structures behave exactly like naturally generated ones (registered into StructureManager, persisted to chunk NBT).",
 	"authors": [
-		"ApTx2012"
+		"Mr-dayhappy"
 	],
 	"contact": {
-		"homepage": "https://github.com/ApTx2012/Minecraft-place-mod",
-		"sources": "https://github.com/ApTx2012/Minecraft-place-mod"
+		"homepage": "https://github.com/Mr-dayhappy/Minecraft-place-mod",
+		"sources": "https://github.com/Mr-dayhappy/Minecraft-place-mod"
 	},
 	"license": "MIT",
 	"icon": "assets/minecraft-place-mod/icon.png",
