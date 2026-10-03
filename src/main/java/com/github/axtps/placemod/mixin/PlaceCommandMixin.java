@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 /**
@@ -36,7 +36,7 @@ public class PlaceCommandMixin {
 	private static void placemod$registerStructure(net.minecraft.commands.CommandSourceStack source,
 												   net.minecraft.core.Holder.Reference<Structure> structureHolder,
 												   net.minecraft.core.BlockPos pos,
-												   CallbackInfo ci,
+												   CallbackInfoReturnable<Integer> cir,
 												   ServerLevel level,
 												   Structure structure,
 												   ChunkGenerator generator,
